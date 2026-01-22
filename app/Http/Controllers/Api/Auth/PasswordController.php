@@ -37,7 +37,7 @@ class PasswordController extends Controller
         // OTP resend cooldown
         if (
             $user->last_otp_sent_at &&
-            now()->diffInSeconds($user->last_otp_sent_at) < 60
+            $user->last_otp_sent_at->addSeconds(60)->isFuture()
         ) {
             return ApiResponse::error(
                 'Please wait before requesting another OTP',
